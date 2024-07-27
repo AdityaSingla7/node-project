@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Dash Influencer </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            if (localStorage.getItem("activeuser") == null) {
+                location.href = "Index.html";
+                return;
+            }
+
+
+            let active = localStorage.getItem("activeuser");
+            alert(active);
+            $("#infu-dash").html("Welcome: " + active);
+
+            // let active1=localStorage.getItem("activeuser");
+            $("#txtemail").val(active).prop("readonly", true);
+
+            // let active2=localStorage.getItem("activeuser");
+            $("#txtemail2").val(active).prop("readonly", true);
+
+
+            $("#post-event-save").click(function () {
+                alert();
+                let obj = {
+                    type: "get",
+                    url: "/post-event-save",
+                    data: {
+                        txtemail: $("#txtemail").val(),
+                        txtEvent: $("#txtEvent").val(),
+                        txtdate: $("#txtdate").val(),
+                        txtstart: $("#txtstart").val(),
+                        txtcity: $("#txtcity").val(),
+                        txtvenue: $("#txtvenue").val(),
+                    }
+                }
+                $.ajax(obj).done(function (resp) {
+                    alert(resp);
+                    //$("#msgSignup").html(resp);
+
+                }).fail(function (err) {
+                    alert(err.statusText);
+                })
+            })
+
+            $("#update-save").click(function () {
+                alert();
+                let obj = {
+                    type: "get",
+                    url: "/update-password",
+                    data: {
+                        txtemail: $("#txtemail").val(),
+                        txtold: $("#txtold").val(),
+                        txtnew: $("#txtnew").val(),
+                        // txtconfirm: $("#txtconfirm").val(),
+
+                    }
+                }
+                $.ajax(obj).done(function (resp) {
+                    alert(resp);
+                    //$("#msgSignup").html(resp);
+
+                }).fail(function (err) {
+                    alert(err.statusText);
+                })
+            })
+        })
+
+    </script>
+    <script>
+        function doLogout() {
+            localStorage.removeItem("activeuser");
+            location.href = "Index.html";
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top bg-body-tertiary">
+
+
+        <div class="container-fluid">
+            <a class="navbar-brand" id="logo"></a>
+            <center>
+                <h1><b> Infulencer Dasboard </b></h1>
+            </center>
+            <form class="d-flex" role="search">
+                <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+
+
+                <!-- <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Signup</button> -->
+                <button class="btn btn-success" type="button" style="margin-left:10px" data-bs-toggle="modal"
+                    id="btnlogout" onclick="doLogout();">Log out</button>
+
+            </form>
+        </div>
+    </nav>
+
+
+    <center>
+        <h1>
+            <b>
+                <u>
+                    Infulencer Dasboard
+
+                </u>
+            </b>
+        </h1>
+        <br>
+        <h3> <b> <span id="infu-dash"></span> </b></h3>
+    </center>
+
+    <!-- profile Card-->
+    <div class="container" style="margin-top: 30px;">
+        <div class="card" style="width: 18rem;float: left;margin-left: 30px;">
+            <img src="Pics/Profile image.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <center>
+                    <a href="infu-Profile.html" class="btn btn-primary" style="width: 120px;"> Profile </a>
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Booking -->
+    <div class="card" style="width: 18rem;float: left;margin-left: 30px;">
+        <img src="Pics/booking image.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+
+            <!-- Button trigger modal -->
+            <center>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Post Bookings </button>
+
+            </center>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Bookings Details</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="row g-3">
+                                <div class="col-md-12" style="margin: auto;">
+                                    <label for="inputEmail4" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="txtemail">
+                                </div>
+                                <div class="col-12">
+                                    <label for="inputAddress" class="form-label">Event Title</label>
+                                    <input type="text" class="form-control" id="txtEvent" placeholder="" required>
+                                </div>
+                                <div class="col-5">
+                                    <label for="inputAddress2" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="txtdate" placeholder="" required>
+                                </div>
+                                <div class="col-5" style="margin-left: 30px;">
+                                    <label for="inputAddress2" class="form-label">Start Time</label>
+                                    <input type="time" class="form-control" id="txtstart" placeholder="" required>
+                                </div>
+                                <div class="col-5">
+                                    <label for="inputAddress2" class="form-label">City/Place</label>
+                                    <input type="text" class="form-control" id="txtcity" placeholder="" required>
+                                </div>
+                                <div class="col-5" style="margin-left: 30px;">
+                                    <label for="inputAddress2" class="form-label"> Venue </label>
+                                    <input type="text" class="form-control" id="txtvenue" placeholder="" required>
+                                </div>
+                                <div>
+                                    <center>
+                                        <button type="button" class="btn btn-primary" style="width: 120px;"
+                                            formaction="/post-event-save" id="post-event-save">
+                                            Post Event
+                                        </button>
+                                    </center>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Manager -->
+    <div class="card" style="width: 18rem;float: left;margin-left: 30px;">
+        <img src="Pics/agent.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <center>
+                <a href="#" class="btn btn-primary"> Event Manager </a>
+            </center>
+        </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="card" style="width: 18rem;float: left;margin-left: 30px;">
+        <img src="Pics/Setting image.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+
+            <!-- Button trigger modal -->
+            <center>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                    Settings </button>
+
+            </center>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Profile Settings</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="row g-3">
+                                <div class="col-md-10" style="margin: auto;">
+                                    <label for="inputEmail4" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="txtemail2" name="txtemail2">
+                                </div>
+                                <div class="col-md-10" style="margin: auto;">
+                                    <label for="inputEmail4" class="form-label">Old Password</label>
+                                    <input type="text" class="form-control" id="txtold" name="txtold" required>
+                                </div>
+                                <div class="col-md-10" style="margin: auto;">
+                                    <label for="inputEmail4" class="form-label">New Password</label>
+                                    <input type="text" class="form-control" id="txtnew" name="txtnew" required>
+                                </div>
+                                <div class="col-md-10" style="margin: auto;">
+                                    <label for="inputEmail4" class="form-label">Confirm Password</label>
+                                    <input type="text" class="form-control" id="txtconfirm" name="txtconfirm" required>
+                                </div>
+                                <div>
+                                    <center>
+                                        <button type="button" class="btn btn-primary"
+                                            style="width: 80px; margin-top: 10px;" formaction="update-save"
+                                            id="update-save">
+                                            Update
+                                        </button>
+                                    </center>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Real Collaboration </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+
+  <!-- jquery link -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <style>
+    #logo {
+      background-image: url(Pics/Profile\ image.jpg);
+      width: 50px;
+      height: 50px;
+      border: 1px solid black;
+      background-color: white;
+      background-size: contain;
+      margin-top: 10px;
+      margin-left: 10px;
+      float: left;
+      /* border-radius: 50%; */
+      transition: ease all 0.5s;
+      background-repeat: no-repeat;
+
+    }
+
+    #logo:hover {
+      transform: scale(1.2);
+      /* transform: rotate(360deg) scale(1.2);*/
+      transition: ease all 0.5s;
+      background-image: url(Pics/Profile\ image.jpg);
+    }
+  </style>
+
+  <script>
+    var module = angular.module("myModule", []);
+    var controller = module.controller("myController", function ($scope) {
+
+
+      $scope.jsonArray =
+        [
+          {
+            Name: "Collaboration", picpath: "collab.jpg", about: "BTI"
+          },
+          {
+            Name: "Meet And Greet", picpath: "meet-greet.jpg", about: "Delhi"
+          },
+          {
+            Name: "Find Infulencer", picpath: "find-influencer.jpg", about: "Chandigarh"
+          },
+          {
+            Name: "Promotion", picpath: "promotion.jpg", about: "Bombay"
+          },
+
+        ]
+
+      $scope.jsonArray2 =
+        [
+          {
+            heading: "Under The Guidance", picpath: "sir-ji.jpg", name: "Rajesh Bansal"
+          },
+          {
+            heading: "Developed by", picpath: "profile image.jpg", name: "Aditya Singla"
+          },
+
+        ]
+
+    })
+
+  </script>
+
+
+  <script>
+    $(document).ready(function () {
+      $("#sign").click(function () {
+        let obj =
+        {
+          type: "get",
+          url: "/signup-process",
+          data: {
+            txtEmail: $("#txtEmail").val(),
+            pwd: $("#pwd").val(),
+            combo: $("#combo").val()
+          }
+        }
+        $.ajax(obj).done(function (resp) {
+          alert(resp);
+          //$("#msgSignup").html(resp);
+
+        }).fail(function (err) {
+          alert(err.statusText);
+        })
+
+      })
+
+      $("#login").click(function () {
+
+        let obj =
+        {
+          type: "get",
+          url: "/login-process",
+          data:
+          {
+            txtEmaill: $("#txtEmaill").val(),
+            txtPwd: $("#txtPwd").val(),
+
+          }
+        }
+        $.ajax(obj).done(function (resp) {
+          alert(resp);
+          if (resp === "Influencer") {
+            location.href = "Dash-infu.html"
+            localStorage.setItem("activeuser", $("#txtEmaill").val());
+          }
+
+          else if (resp === "Client") {
+            location.href = "Client-Dash.html";
+            localStorage.setItem("activeuser", $("#txtEmaill").val());
+          }
+
+          else
+            alert(resp);
+
+
+        }).fail(function (err) {
+          alert(err.statusText);
+        })
+
+      })
+
+      $("#btninfu").click(function () {
+        // < a href="Public/Dash-infu.html">;
+
+      })
+
+
+    })
+
+
+
+  </script>
+</head>
+
+<body style="background-color: white;" ng-app="myModule" ng-controller="myController">
+  <center>
+    <h1>Aditya Singla</h1>
+    <hr>
+    <hr>
+    <h1> Real Collaboration </h1>
+
+    <hr>
+    <hr>
+
+
+    <nav class="navbar fixed-top bg-body-tertiary">
+
+
+      <div class="container-fluid">
+        <a class="navbar-brand" id="logo"></a>
+        <center>
+          <h1><b>Real Collaboration</b></h1>
+        </center>
+        <form class="d-flex" role="search">
+          <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+
+
+          <button class="btn btn-success" type="button" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Signup</button>
+          <button class="btn btn-success" type="button" style="margin-left:10px" data-bs-target="#exampleModallog"
+            data-bs-toggle="modal">Login</button>
+
+          <!-- <button class="btn btn-info" type="button" style="margin-left:10px"
+           data-bs-target="#OurServices">Our Services</button> -->
+          <a class="btn btn-info" type="button" style="margin-left:10px" href="#OurServices">Our Services</a>
+
+          <!-- <button class="btn btn-info" type="button" style="margin-left:10px" data-bs-target="#exampleModallog"
+            data-bs-toggle="modal">Our Team</button> -->
+
+          <a class="btn btn-info" type="button" style="margin-left:10px" href="#OurTeam">Our Team</a>
+
+
+          <!-- <button class="btn btn-info" type="button" style="margin-left:10px" data-bs-target="#exampleModallog"
+            data-bs-toggle="modal">Reach Us</button> -->
+
+          <a class="btn btn-info" type="button" style="margin-left:10px" href="#ReachUs">Reach Us</a>
+        </form>
+      </div>
+    </nav>
+
+
+
+    <!-- Button trigger modal -->
+    <!-- <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Signup
+    </button>
+    <button class="btn btn-outline-success" type="button" style="margin-left:10px" data-bs-target="#exampleModallog"
+      data-bs-toggle="modal"> Login </button>
+    <hr> -->
+
+    <a href="/dash-infu"> <button class="btn btn-outline-primary" type="button" style="margin-left:10px" id="btninfu">
+        Infu-dash </button></a>
+
+    <a href="/Admin-dash"> <button class="btn btn-outline-primary" type="button" style="margin-left:10px" id="">
+        Admin-dash </button></a>
+
+    <hr>
+    <!-- <a href="/Infu-Finder"> <button class="btn btn-outline-primary" type="button" style="margin-left:10px" id="">
+        Infu-Finder </button></a> -->
+
+    <a href="/Client-Dash"> <button class="btn btn-outline-primary" type="button" style="margin-left:10px" id="">
+        Client Dash </button></a>
+  </center>
+
+
+  <!-- Modal Signup-->
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"> Signup here </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+          <form>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="txtEmail" class="form-label">Email address</label>
+              <input type="email" id="txtEmail" name="txtEmail" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" id="pwd" name="pwd" class="form-control" id="exampleInputPassword1">
+            </div>
+
+            <!-- Selected category -->
+            <select class="form-select" aria-label="Default select example" id="combo" name="combo">
+
+              <option selected>Select your category</option>
+              <option value="Client">Client</option>
+              <option value="Influencer" name="infl" id="infl">Influencer</op tion>
+
+            </select>
+
+          </form>
+        </div>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="sign"> Signup </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Login -->
+
+  <div class="modal fade" id="exampleModallog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Login here</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" id="txtEmaill" name="txtEmaill" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" id="txtPwd" name="txtPwd" class="form-control" id="exampleInputPassword1">
+            </div>
+
+            <!-- <span id="logspan">*</span> -->
+
+            <br>
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="login">Login</button>
+          <br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carousel -->
+
+  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="1500">
+        <div style="height: 700px; background-image: url(Pics/influencer-carousel-1.jpg); background-size: contain;">
+        </div>
+      </div>
+      <!-- <img src="Pics/infulecer.jpg" class="d-block w-100" alt="..."> -->
+      <div class="carousel-item" data-bs-interval="1500">
+        <div style="height: 700px; background-image: url(Pics/influencer-carousel-2.jpg); background-size: contain;">
+        </div>
+        <!-- <img src="Pics/Hospital-Image-2.jpg" class="d-block w-100" alt="..."> -->
+      </div>
+      <div class="carousel-item" data-bs-interval="1500">
+        <div style="height: 700px; background-image: url(Pics/influencer-carousel-3.jpg); background-size: contain;">
+        </div>
+        <!-- <img src="Pics/Hospital-Image-2.jpg" class="d-block w-100" alt="..."> -->
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <hr>
+
+
+  <div>
+    <center>
+      <h3><b id="OurServices">Our Services</b></h3>
+      <hr>
+    </center>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3" ng-repeat="obj in jsonArray">
+        <div class="card mt-3">
+          <center> <img src="pics/{{obj.picpath}}" alt="..." height="150px" width="50%"></center>
+          <div class="card-body">
+            <center>
+              <h5 class="card-title"><b>{{obj.Name}}</b></h5>
+              <!-- <h5 class="card-title">{{obj.pwd}}</h5> -->
+              <!-- <h5 class="card-title">{{obj.picpath}}</h5> -->
+              <h6 class="">{{obj.about}}</h6>
+
+              <a href="#" class="btn btn-primary">Click Here</a>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <div>
+    <center>
+      <h3><b id="OurTeam">Our Team</b></h3>
+      <hr>
+    </center>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6" ng-repeat="obj in jsonArray2">
+        <div class="card mt-3">
+          <center >
+          <h5 class="card-title"><b>{{obj.heading}}</b></h5><hr>
+          <u><h3 class="card-title" style="margin-left: 250px;"><b>{{obj.name}}</b></h3></u>
+          <div style="margin-left: 50px;">
+            founder of banglore computer education since 2001
+          </div>
+        </center>
+           <img src="pics/{{obj.picpath}}" alt="..." height="250px" width="300px">
+          <div class="card-body">
+            <center>
+              <!-- <h5 class="card-title" style="margin-left: 250px;"><b>{{obj.name}}</b></h5> -->
+              <!-- <h6 class="">{{obj.name}}</h6> -->
+
+              <a href="#" class="btn btn-primary">More Info</a>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+
+
+
+
+
+  <div>
+    <center>
+      <h3><b id="ReachUs">Reach Us</b></h3>
+      <hr>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807340362614!2d74.9497531753975!3d30.211951274839702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1717484314100!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </center>
+  </div>
+  <hr>
+
+
+  <div>
+    <center>
+      <h3><b id=""> Copyright@XYZ </b></h3>
+      <hr>
+    </center>
+  </div>
+
+
+
+
+</body>
+
+</html>

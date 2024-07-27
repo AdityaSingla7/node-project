@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <script>
+        var module=angular.module("myModule",[]);
+        var controller=module.controller("myController",function($scope)
+        {
+            $scope.doTotal=function()
+            {
+                $scope.total=parseFloat($scope.cpp)+parseFloat($scope.java)+parseFloat($scope.dsa);
+            }
+             $scope.doPer=function()
+             {
+                 $scope.Per=(parseFloat($scope.cpp)+parseFloat($scope.java)+parseFloat($scope.dsa))/3;
+             }
+            // $scope.doResult=function()
+            // {
+            //     $scope.result=;
+            // }
+        })
+    </script>
+    <title> Angular Marks </title>
+</head>
+<body ng-app="myModule" ng-controller="myController">
+    <center>
+    <p>
+        <h1> Marks Card </h1>
+        <hr>
+    </p>
+    <p>
+        C++ <input type="text" ng-model="cpp">
+         <br>
+         {{cpp}}
+    </p>
+    <p>
+        JAVA <input type="text" ng-model="java"> 
+        <br>
+        {{java}}
+    </p>
+    <p>
+        DSA <input type="text" ng-model="dsa"> 
+        <br>
+        {{dsa}}
+    </p>
+    <p>
+        <input type="button" ng-click="doTotal();" value="Total">
+        <input type="button" ng-click="doPer();" value="Percentage">
+        <input type="button" ng-click="doResult();" value="Result" >
+    </p>
+    <p>
+        Total:{{total}}
+    </p>
+    <p>
+        Percentage:{{Per}}
+    </p>
+    </center>
+    
+</body>
+</html>

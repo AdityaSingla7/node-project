@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <script>
+        var module=angular.module("myModule",[]);
+
+        var controller=module.controller("myController",function($scope,$http)
+        {
+            $scope.jsonArrayEmails;
+            $scope.jsonArrayAll;
+            $scope.fillEmails=function()
+                {
+                    let url="/fetch-all-emails";
+                    $http.get(url).then(function(response)
+                    {
+                        //alert(JSON.stringify(response.data)) ;
+                        $scope.jsonArrayEmails=response.data;
+
+                    },function(err)
+                    {
+                        alert(err)
+                    });
+                    
+                }
+
+                 //---------------------
+                 $scope.doShowSel=function()
+                {
+                    
+                    let email=$scope.selEmail;
+                    let url="/fetch-some-infu?email="+email;
+
+                    $http.get(url).then(allIsWell,notWell);
+
+                    function allIsWell(response)
+                    {
+                        //alert(JSON.stringify(response.data)) ;
+                        $scope.jsonArrayAll=response.data;
+
+                    }
+                    function notWell(err)
+                    {
+                        alert(err)
+                    }
+                }
+                //----------------------
+                $scope.getAll=function()
+                {
+                    let url="/fetch-all-infu";
+                    $http.get(url).then(allIsWell,notWell);
+
+                    function allIsWell(response)
+                    {
+                        //alert(JSON.stringify(response.data)) ;
+                        $scope.jsonArrayAll=response.data;
+
+                    }
+                    function notWell(err)
+                    {
+                        alert(err)
+                    }
+                }
+
+
+        });
+
+    </script>
+    <title> Admin-All-infu </title>
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="fillEmails();getAll();">
+
+    <center>
+        <h1> All Influencer </h1>
+        <hr>
+
+     <select ng-model="selEmail" ng-change="doShowSel();" >
+
+        <option ng-repeat="obj in jsonArrayEmails" value="{{obj.emailid}}" >{{obj.emailid}}</option>
+    </select>
+    <input  class="btn btn-success" type="button" value=" All Influencer " ng-click="getAll();">
+
+    
+    <div class="container">
+
+                    
+        <table width="700" border="1" class="table" >
+            <tr>
+             <th>Sr.No</th>
+             <th>Email ID</th>
+             <th>Name</th>
+             <th>Gender</th>
+             
+             <th>Contact</th>
+             <th>City</th>
+             
+             <th>Field</th>
+             
+             <th>Pic</th>
+            </tr> 
+            <tr ng-repeat="obj in jsonArrayAll">
+                 <td>
+                    {{$index+1}}
+                </td>
+                 <td>
+                     {{obj.emailid}}
+                 </td>
+                 <td>
+                     {{obj.sname}}
+                 </td>
+                 <td>
+                    {{obj.gender}}
+                </td>
+                 
+                
+                <td>
+                    {{obj.contact}}
+                </td>
+                <td>
+                    {{obj.city}}
+                </td>
+                <td>
+                    {{obj.field}}
+                </td>
+                
+                 <td>
+                     {{obj.ppic}}
+                     <br>
+                     <img src="uploads/{{obj.ppic}}" width="50" height="50" alt="">
+                 </td>
+            </tr>
+
+     </table>
+    </div>
+    </center>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script>
+        var module = angular.module("myModule", []);
+        var controller = module.controller("myController", function ($scope) 
+        {
+            // $scope.fn="Its First Name";
+            $scope.doJoin = function () 
+            {
+                $scope.full = $scope.fnApp + " " + $scope.lnApp;
+            }
+            $scope.doClear = function () 
+            {
+                $scope.full = "";
+                $scope.fnApp = "";
+                $scope.lnApp = "";
+            }
+            $scope.months = ["Jan", "Feb", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+        })
+    </script>
+    <title> AngularJS </title>
+</head>
+
+<body ng-app="myModule" ng-controller="myController">
+    <center>
+        <p>
+            First Name <input type="text" ng-model="fn">
+        </p>
+        Hello:{{fn}}
+        <hr>
+        <p>
+        <p>
+            F.Name <input type="text" ng-model="fnApp">
+            <br>
+            {{fnApp}}
+        </p>
+        <p>
+            L.Name <input type="text" ng-model="lnApp">
+        </p>
+        <p>
+            <input type="button" ng-click="doJoin();" value="Join Now">
+            <input type="button" ng-click="doClear();" value="Clear">
+
+        </p>
+        <p>
+            Full Name:{{full}}
+        </p>
+        </p>
+
+        Months:
+        <select>
+            <option ng-repeat="str in months" value="{{str}}">{{str}}</option>
+        </select>
+
+        Days:
+        <select name="" id="">
+            <option ng-repeat="n in [].constructor(31) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+        </select>
+    </center>
+</body>
+
+</html>
